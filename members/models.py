@@ -32,8 +32,15 @@ def members_list_saved(sender, instance, created, **kwargs):
     print("Signal handler started")
     time.sleep(5)  # Simulate a long task
     print(f"{sender},{instance.firstname} details has been saved! Created: {created}")
+
+# @receiver(pre_save, sender=Rectangle)     #execute before commit
+# def safe_signal(sender, instance, created, **kwargs):
     
-@receiver(post_save, sender=Rectangle)
+#     print("Signal running... About to raise an error!")
+#     raise Exception("Oops! Signal failed.")
+
+
+@receiver(post_save, sender=Rectangle)  #execute after commit
 def fail_signal(sender, instance, created, **kwargs):
     print("Signal running... About to raise an error!")
     raise Exception("Oops! Signal failed.")
